@@ -260,6 +260,16 @@
     .settings-card h2 { margin: 0 0 5px; font-size: 17px; }
     .settings-card p { margin: 0 0 14px; color: var(--muted); font-size: 12px; }
     .settings-card select { width: 100%; min-height: 40px; padding: 0 10px; border: 1px solid var(--line); border-radius: 7px; color: var(--ink); background: var(--paper); }
+    .login-history { display: grid; gap: 8px; margin-top: 12px; }
+    .login-history-item { display: flex; justify-content: space-between; gap: 12px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 7px; background: var(--canvas); }
+    .login-history-device, .login-history-meta { display: block; }
+    .login-history-device { font-weight: 700; }
+    .login-history-meta { color: var(--muted); font-size: 12px; text-align: right; }
+    .login-history-empty { color: var(--muted); font-size: 12px; }
+    @media (max-width: 560px) {
+      .login-history-item { align-items: flex-start; flex-direction: column; gap: 4px; }
+      .login-history-meta { text-align: left; }
+    }
     .directory-toolbar { justify-content: space-between; }
     .directory-toolbar-controls { display: flex; flex: 1 1 360px; flex-wrap: wrap; align-items: center; gap: 10px; }
     .directory-toolbar-controls input { flex: 1 1 180px; }
@@ -994,6 +1004,11 @@
               <div class="dialog-actions"><div></div><div class="dialog-actions-right"><button class="primary" type="submit" data-i18n="changePasswordSubmit">Изменить пароль</button></div></div>
             </form>
           </div>
+          <div class="settings-card">
+            <h2 data-i18n="loginHistoryTitle">История входов</h2>
+            <p data-i18n="loginHistoryInfo">Показываются входы, сохранённые в этом браузере.</p>
+            <div class="login-history" id="loginHistoryList"></div>
+          </div>
         </div>
       </section>
     </main>
@@ -1207,6 +1222,7 @@
       directoriesButton.hidden = authRole !== "scheduler" && authRole !== "developer";
       updateProfileTeacherOptions();
       renderProfile();
+      renderLoginHistory();
       renderSheetStatus();
       if (dialogBackdrop.classList.contains("open")) {
         const lesson = lessons.find(item => item.id === editingId);
@@ -1274,8 +1290,8 @@
     Object.assign(translations.kk, { directoryGroupFieldsRequired: "Топ кодын және атауын толтырыңыз", directoryMissingColumns: "Топ бағандарын анықтау мүмкін болмады. Google Apps Script-ті жаңартып, қайталап көріңіз." });
     Object.assign(translations.ru, { directoryActions: "Действия", directoryEdit: "Изменить", directoryDelete: "Удалить", directoryEditTitle: "Редактирование записи", directoryDeleteConfirm: "Удалить эту запись из справочника?", directoryEditSuccess: "Запись обновлена в Google Sheets", directoryDeleteSuccess: "Запись удалена из справочника", directoryDeleteError: "Не удалось удалить запись", directoryRecordNotFound: "Запись уже удалена или не найдена", directoryRecordAmbiguous: "Найдено несколько совпадающих записей. Операция отменена", directoryDeleteGroup: "Удалить", directoryDeleteGroupConfirm: "Удалить группу «{name}» ({code}) из справочника? Существующие занятия в расписании останутся.", directoryDeleteGroupSuccess: "Группа удалена из справочника", directoryGroupNotFound: "Группа уже удалена или не найдена", directoryGroupAmbiguous: "Найдено несколько совпадающих групп. Удаление отменено" });
     Object.assign(translations.kk, { directoryActions: "Әрекеттер", directoryEdit: "Өзгерту", directoryDelete: "Жою", directoryEditTitle: "Жазбаны өзгерту", directoryDeleteConfirm: "Бұл жазбаны анықтамалықтан жоясыз ба?", directoryEditSuccess: "Жазба Google Sheets ішінде жаңартылды", directoryDeleteSuccess: "Жазба анықтамалықтан жойылды", directoryDeleteError: "Жазбаны жою мүмкін болмады", directoryRecordNotFound: "Жазба жойылған немесе табылмады", directoryRecordAmbiguous: "Бірнеше сәйкес жазба табылды. Операция тоқтатылды", directoryDeleteGroup: "Жою", directoryDeleteGroupConfirm: "«{name}» ({code}) тобын анықтамалықтан жоясыз ба? Кестедегі бұрыннан бар сабақтар сақталады.", directoryDeleteGroupSuccess: "Топ анықтамалықтан жойылды", directoryGroupNotFound: "Топ жойылған немесе табылмады", directoryGroupAmbiguous: "Бірнеше сәйкес топ табылды. Жою тоқтатылды" });
-    Object.assign(translations.ru, { settings: "Настройки", settingsInfo: "Настройте язык и внешний вид приложения.", settingsLanguageTitle: "Язык интерфейса", settingsLanguageInfo: "Выберите язык меню и подписей.", settingsThemeTitle: "Оформление", settingsThemeInfo: "Выберите светлую или тёмную тему.", themeLight: "Светлая", themeDark: "Тёмная" });
-    Object.assign(translations.kk, { settings: "Баптаулар", settingsInfo: "Қолданбаның тілі мен сыртқы көрінісін баптаңыз.", settingsLanguageTitle: "Интерфейс тілі", settingsLanguageInfo: "Мәзірлер мен жазулардың тілін таңдаңыз.", settingsThemeTitle: "Безендіру", settingsThemeInfo: "Ашық немесе қараңғы тақырыпты таңдаңыз.", themeLight: "Ашық", themeDark: "Қараңғы" });
+    Object.assign(translations.ru, { settings: "Настройки", settingsInfo: "Настройте язык и внешний вид приложения.", settingsLanguageTitle: "Язык интерфейса", settingsLanguageInfo: "Выберите язык меню и подписей.", settingsThemeTitle: "Оформление", settingsThemeInfo: "Выберите светлую или тёмную тему.", themeLight: "Светлая", themeDark: "Тёмная", loginHistoryTitle: "История входов", loginHistoryInfo: "Показываются входы, сохранённые в этом браузере.", loginHistoryEmpty: "История входов пока пуста.", loginHistoryCurrent: "Текущий вход" });
+    Object.assign(translations.kk, { settings: "Баптаулар", settingsInfo: "Қолданбаның тілі мен сыртқы көрінісін баптаңыз.", settingsLanguageTitle: "Интерфейс тілі", settingsLanguageInfo: "Мәзірлер мен жазулардың тілін таңдаңыз.", settingsThemeTitle: "Безендіру", settingsThemeInfo: "Ашық немесе қараңғы тақырыпты таңдаңыз.", themeLight: "Ашық", themeDark: "Қараңғы", loginHistoryTitle: "Кіру тарихы", loginHistoryInfo: "Осы браузерде сақталған кірулер көрсетіледі.", loginHistoryEmpty: "Кіру тарихы әзірге бос.", loginHistoryCurrent: "Ағымдағы кіру" });
     Object.assign(translations.ru, { changePasswordTitle: "Смена пароля", changePasswordInfo: "Для смены пароля подтвердите текущий пароль.", changePasswordSetInfo: "Задайте пароль для этого профиля разработчика.", currentPassword: "Текущий пароль", newPassword: "Новый пароль", confirmNewPassword: "Повторите новый пароль", changePasswordSubmit: "Изменить пароль", currentPasswordError: "Текущий пароль введён неверно", passwordChangeMismatch: "Новые пароли не совпадают", passwordChangeSuccess: "Пароль изменён", passwordChangeError: "Не удалось сохранить новый пароль" });
     Object.assign(translations.kk, { changePasswordTitle: "Құпиясөзді өзгерту", changePasswordInfo: "Құпиясөзді өзгерту үшін ағымдағы құпиясөзді растаңыз.", changePasswordSetInfo: "Осы әзірлеуші профиліне құпиясөз орнатыңыз.", currentPassword: "Ағымдағы құпиясөз", newPassword: "Жаңа құпиясөз", confirmNewPassword: "Жаңа құпиясөзді қайталаңыз", changePasswordSubmit: "Құпиясөзді өзгерту", currentPasswordError: "Ағымдағы құпиясөз қате", passwordChangeMismatch: "Жаңа құпиясөздер сәйкес келмейді", passwordChangeSuccess: "Құпиясөз өзгертілді", passwordChangeError: "Жаңа құпиясөзді сақтау мүмкін болмады" });
     Object.assign(translations.ru, { importSchedule: "Импорт", scheduleImportTitle: "Импорт расписания", scheduleImportDescription: "Проверьте распознанные занятия перед добавлением", scheduleImportLoading: "Чтение файла…", scheduleImportRecognizing: "Распознавание изображения…", scheduleImportReady: "Найдено занятий: {count}. Проверьте список перед добавлением.", scheduleImportSkipped: "Пропущено строк: {count}.", scheduleImportNoNewLessons: "Новых занятий для импорта нет", scheduleImportError: "Не удалось импортировать файл расписания", scheduleImportErrorDetail: "Ошибка: {error}", scheduleImportNoRows: "В файле не найдены подходящие строки расписания.", scheduleImportNoHeaders: "Не найдены столбцы расписания. Нужны день, время, предмет, преподаватель, группа и тип занятия.", scheduleImportUnsupported: "Формат файла не поддерживается. Используйте JSON, Excel (.xlsx/.xls), Word (.docx) или изображение.", scheduleImportPreviewLimit: "В предварительном просмотре показаны первые {count} занятий.", applyImport: "Добавить занятия", importSkippedRow: "Строка {row}: {reason}", importScheduleErrorLibrary: "Не удалось загрузить модуль для чтения файла. Проверьте подключение к интернету и повторите попытку.", scheduleBackupExported: "Резервная копия расписания скачана", scheduleImportSuccess: "Импортировано занятий: {count}", undoLastScheduleAction: "Отменить последнее действие", scheduleUndoSuccess: "Последнее действие отменено", scheduleUndoUnavailable: "Нет действия для отмены", scheduleMoveSuccess: "Занятие перенесено", scheduleMoveConflict: "Нельзя перенести: {reason}", scheduleMoveOutsideDay: "Занятие не помещается до конца учебного дня", dragLessonHint: "Перетащите пару на свободный день и время", conflictLesson: "Пара" });
@@ -1357,8 +1373,71 @@
     const schedulerProfileStorageKey = "pary-scheduler-profile-v1";
     const developerProfileStorageKey = "pary-developer-profile-v1";
     const rememberedPasswordStorageKey = "pary-remembered-passwords-v1";
+    const loginHistoryStorageKey = "pary-login-history-v1";
     const lessonDuration = 50;
     let scheduleDataNeedsRepair = false;
+    function loginHistory() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(loginHistoryStorageKey) || "[]");
+        return Array.isArray(saved) ? saved.filter(item => item && typeof item.device === "string" && Number.isFinite(item.timestamp)) : [];
+      } catch (error) {
+        console.error("Login history could not be read", error);
+        return [];
+      }
+    }
+    function deviceLabel() {
+      const userAgent = navigator.userAgent;
+      const platform = /Android/u.test(userAgent) ? "Android"
+        : /iPhone|iPad|iPod/u.test(userAgent) ? "iOS"
+          : /Windows/u.test(userAgent) ? "Windows"
+            : /Mac OS X/u.test(userAgent) ? "macOS"
+              : /Linux/u.test(userAgent) ? "Linux" : "Web";
+      const browser = /Edg\//u.test(userAgent) ? "Edge"
+        : /OPR\//u.test(userAgent) ? "Opera"
+          : /Chrome\//u.test(userAgent) ? "Chrome"
+            : /Firefox\//u.test(userAgent) ? "Firefox"
+              : /Safari\//u.test(userAgent) && !/Chrome\//u.test(userAgent) ? "Safari" : "Browser";
+      const device = /Mobi|Android/u.test(userAgent) ? "mobile"
+        : /Tablet|iPad/u.test(userAgent) ? "tablet" : "desktop";
+      return `${platform} · ${browser} · ${device}`;
+    }
+    function recordLogin() {
+      const role = authRole === "developer" ? tr("administratorRoleLabel")
+        : authRole === "scheduler" ? tr("schedulerRoleLabel") : tr("profileRole");
+      const entry = { device: deviceLabel(), role, timestamp: Date.now() };
+      try {
+        localStorage.setItem(loginHistoryStorageKey, JSON.stringify([entry, ...loginHistory()].slice(0, 20)));
+      } catch (error) {
+        console.error("Login history could not be saved", error);
+      }
+      renderLoginHistory();
+    }
+    function renderLoginHistory() {
+      const list = document.getElementById("loginHistoryList");
+      if (!list) return;
+      list.replaceChildren();
+      const entries = loginHistory();
+      if (!entries.length) {
+        const empty = document.createElement("span");
+        empty.className = "login-history-empty";
+        empty.textContent = tr("loginHistoryEmpty");
+        list.append(empty);
+        return;
+      }
+      entries.forEach((entry, index) => {
+        const item = document.createElement("div");
+        item.className = "login-history-item";
+        const device = document.createElement("span");
+        device.className = "login-history-device";
+        device.textContent = entry.device;
+        const meta = document.createElement("span");
+        meta.className = "login-history-meta";
+        const date = new Date(entry.timestamp);
+        meta.textContent = `${entry.role} · ${date.toLocaleString(language === "kk" ? "kk-KZ" : "ru-RU")}${index === 0 ? ` · ${tr("loginHistoryCurrent")}` : ""}`;
+        item.append(device, meta);
+        list.append(item);
+      });
+    }
     function scheduleClockFromDate(date) {
       if (date.getUTCFullYear() === 1899 && date.getUTCMonth() === 11 && date.getUTCDate() === 30) {
         const totalMinutes = (date.getUTCHours() * 60 + date.getUTCMinutes() + new Date().getTimezoneOffset() + 1440) % 1440;
@@ -4787,6 +4866,7 @@
         developerProfile = { developerName, passwordHash: "phrase-only" };
         profile = developerProfile;
         sessionAuthenticated = true;
+        recordLogin();
         renderProfile();
         closeProfileDialog();
         toast(tr("loginSuccess"));
@@ -4830,6 +4910,7 @@
           return;
         }
         sessionAuthenticated = true;
+        recordLogin();
         updateRememberedPassword(password, rememberPassword);
         renderProfile();
         closeProfileDialog();
@@ -4860,6 +4941,7 @@
           profile = localProfile;
         }
         sessionAuthenticated = true;
+        recordLogin();
         updateRememberedPassword(password, rememberPassword);
         syncAuthScreen();
         renderProfile();
