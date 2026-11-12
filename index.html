@@ -2491,6 +2491,13 @@
       wrapper.prepend(freeHours);
       table.append(body); wrapper.append(table); container.append(wrapper);
     }
+    function agendaLessonSpan(item) {
+      return Math.max(1, Number(item.lessonCount) || 1);
+    }
+    function agendaLessonEnd(item) {
+      const end = minutes(item.start) + agendaLessonSpan(item) * lessonDuration + (agendaLessonSpan(item) - 1) * 10;
+      return `${String(Math.floor(end / 60)).padStart(2, "0")}:${String(end % 60).padStart(2, "0")}`;
+    }
     function renderGroupAgenda(items, group) {
       const container = document.getElementById("groupAgenda");
       container.replaceChildren();
@@ -2508,15 +2515,25 @@
       for (let day = 0; day < scheduleDays; day++) {
         const dayItems = items.filter(item => item.day === day);
         const occupiedHours = new Set();
-        for (const [slotIndex, hour] of scheduleHours.entries()) {
+        const itemsByHour = new Map();
+        for (const item of dayItems) {
+          const startHour = Number(item.start.slice(0, 2));
+          itemsByHour.set(startHour, [...(itemsByHour.get(startHour) || []), item]);
+          for (let offset = 1; offset < agendaLessonSpan(item); offset++) occupiedHours.add(startHour + offset);
+        }
+        const dayRowSpan = scheduleHours.filter(hour => !occupiedHours.has(hour)).length;
+        let dayRowIndex = 0;
+        for (const hour of scheduleHours) {
+          if (occupiedHours.has(hour)) continue;
           const row = document.createElement("tr");
-          if (slotIndex === 0) {
+          if (dayRowIndex === 0) {
             const dayCell = document.createElement("td");
             dayCell.className = "group-day-cell";
-            dayCell.rowSpan = scheduleHours.length;
+            dayCell.rowSpan = dayRowSpan;
             dayCell.textContent = dayNames[language][day].toLocaleUpperCase(language === "kk" ? "kk-KZ" : "ru-RU");
             row.append(dayCell);
           }
+          dayRowIndex++;
           const timeCell = document.createElement("td");
           timeCell.className = "group-time-cell";
           timeCell.textContent = `${String(hour).padStart(2, "0")}:00–${String(hour).padStart(2, "0")}:50`;
@@ -2524,7 +2541,7 @@
           const kindCell = document.createElement("td");
           const teacherCell = document.createElement("td");
           const roomCell = document.createElement("td");
-          const slotItems = dayItems.filter(item => Number(item.start.slice(0, 2)) === hour);
+          const slotItems = itemsByHour.get(hour) || [];
           for (const item of slotItems) {
             const lesson = document.createElement("button");
             lesson.type = "button";
@@ -2532,10 +2549,17 @@
             lesson.innerHTML = `<strong>${escapeHtml(item.subject)}</strong><span>${escapeHtml(translateKind(item.kind))} · ${escapeHtml(item.teacher || "—")}</span>`;
             lesson.addEventListener("click", () => openDialog(item.id));
             subjectCell.append(lesson);
+            if (slotItems.length === 1 && agendaLessonSpan(item) > 1) {
+              timeCell.rowSpan = agendaLessonSpan(item);
+              subjectCell.rowSpan = agendaLessonSpan(item);
+              kindCell.rowSpan = agendaLessonSpan(item);
+              teacherCell.rowSpan = agendaLessonSpan(item);
+              roomCell.rowSpan = agendaLessonSpan(item);
+              timeCell.textContent = `${item.start}–${agendaLessonEnd(item)}`;
+            }
             kindCell.textContent = translateKind(item.kind);
             teacherCell.textContent = item.teacher || "—";
             roomCell.textContent = item.room || tr("roomNotSet");
-            for (let offset = 1; offset < item.lessonCount; offset++) occupiedHours.add(Number(item.start.slice(0, 2)) + offset);
           }
           if (!slotItems.length && !occupiedHours.has(hour) && canEditSchedule()) {
             const addSlot = document.createElement("button");
@@ -2592,21 +2616,36 @@
         for (let day = 0; day < scheduleDays; day++) {
           const dayItems = groupItems.filter(item => item.day === day);
           const occupiedHours = new Set();
-          for (const [slotIndex, hour] of scheduleHours.entries()) {
+          const itemsByHour = new Map();
+          for (const item of dayItems) {
+            const startHour = Number(item.start.slice(0, 2));
+            itemsByHour.set(startHour, [...(itemsByHour.get(startHour) || []), item]);
+            for (let offset = 1; offset < agendaLessonSpan(item); offset++) occupiedHours.add(startHour + offset);
+          }
+          const dayRowSpan = scheduleHours.filter(hour => !occupiedHours.has(hour)).length;
+          let dayRowIndex = 0;
+          for (const hour of scheduleHours) {
+            if (occupiedHours.has(hour)) continue;
             const row = document.createElement("tr");
-            if (slotIndex === 0) {
-              const dayCell = document.createElement("td"); dayCell.className = "group-day-cell"; dayCell.rowSpan = scheduleHours.length; dayCell.textContent = dayNames[language][day].toLocaleUpperCase(language === "kk" ? "kk-KZ" : "ru-RU"); row.append(dayCell);
+            if (dayRowIndex === 0) {
+              const dayCell = document.createElement("td"); dayCell.className = "group-day-cell"; dayCell.rowSpan = dayRowSpan; dayCell.textContent = dayNames[language][day].toLocaleUpperCase(language === "kk" ? "kk-KZ" : "ru-RU"); row.append(dayCell);
             }
+            dayRowIndex++;
             const timeCell = document.createElement("td"); timeCell.className = "group-time-cell"; timeCell.textContent = `${String(hour).padStart(2, "0")}:00–${String(hour).padStart(2, "0")}:50`; row.append(timeCell);
             const subjectCell = document.createElement("td"); subjectCell.className = "group-subject-cell";
             const roomCell = document.createElement("td");
-            const slotItems = dayItems.filter(item => Number(item.start.slice(0, 2)) === hour);
+            const slotItems = itemsByHour.get(hour) || [];
             for (const item of slotItems) {
               const lesson = document.createElement("button"); lesson.type = "button"; lesson.className = "group-lesson";
               lesson.innerHTML = `<strong>${escapeHtml(item.subject)}</strong><span>${escapeHtml(translateKind(item.kind))} · ${escapeHtml(item.teacher || "—")}</span>`;
               lesson.addEventListener("click", () => openDialog(item.id)); subjectCell.append(lesson);
               roomCell.textContent = item.room || tr("roomNotSet");
-              for (let offset = 1; offset < item.lessonCount; offset++) occupiedHours.add(Number(item.start.slice(0, 2)) + offset);
+              if (slotItems.length === 1 && agendaLessonSpan(item) > 1) {
+                timeCell.rowSpan = agendaLessonSpan(item);
+                subjectCell.rowSpan = agendaLessonSpan(item);
+                roomCell.rowSpan = agendaLessonSpan(item);
+                timeCell.textContent = `${item.start}–${agendaLessonEnd(item)}`;
+              }
             }
             if (!slotItems.length && !occupiedHours.has(hour) && canEditSchedule()) {
               const addSlot = document.createElement("button");
