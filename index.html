@@ -463,6 +463,7 @@
     .lesson-mode-switch { display: flex; gap: 4px; }
     .lesson-mode-switch button { width: 42px; height: 34px; border: 1px solid var(--line); border-radius: 7px; color: var(--muted); background: var(--paper); font-size: 20px; line-height: 1; }
     .lesson-mode-switch button.selected { color: white; border-color: var(--forest); background: var(--forest); }
+    .selection-summary { margin-top: 6px; color: var(--forest); font-size: 12px; font-weight: 600; }
     .field[hidden] { display: none; }
     .field.full { grid-column: 1 / -1; }
     .field label { color: #596762; font-size: 11px; font-weight: 700; }
@@ -1048,9 +1049,9 @@
           <div class="field"><label for="faculty" data-i18n="faculty">Факультет</label><select id="faculty" name="faculty"><option value="computer" data-i18n="computerFaculty">Компьютерная инженерия</option><option value="electrical" data-i18n="electricalFaculty">Электрическая инженерия</option></select></div>
           <div class="field full"><span class="field-label" data-i18n="lessonMode">Режим занятия</span><div class="lesson-mode-switch" role="group" data-i18n-aria="lessonMode"><button id="singleLessonModeButton" type="button" class="selected" aria-pressed="true" data-i18n-aria="singleLessonMode">👤</button><button id="multipleLessonModeButton" type="button" aria-pressed="false" data-i18n-aria="multipleLessonMode">👥</button></div></div>
           <div class="field" id="singleGroupField"><label for="group" data-i18n="group">Группа</label><select id="group" name="group" required><option value="">Выберите группу</option></select><span class="field-hint" id="groupSizeHint">Выберите группу</span></div>
-          <div class="field" id="lectureGroupsField" hidden><label for="lectureGroups" data-i18n="streamGroups">Группы потока</label><select id="lectureGroups" name="lectureGroups" multiple size="5" aria-describedby="lectureGroupsHint"></select><span class="field-hint" id="lectureGroupsHint" data-i18n="streamGroupsHint">Выберите несколько групп.</span></div>
+          <div class="field" id="lectureGroupsField" hidden><label for="lectureGroups" data-i18n="streamGroups">Группы потока</label><select id="lectureGroups" name="lectureGroups" multiple size="5" aria-describedby="lectureGroupsHint"></select><span class="field-hint" id="lectureGroupsHint" data-i18n="streamGroupsHint">Выберите несколько групп.</span><span class="selection-summary" id="selectedGroupsSummary" aria-live="polite"></span></div>
           <div class="field"><label for="teacher" data-i18n="teacher">Преподаватель</label><select id="teacher" name="teacher" required><option value="">Выберите преподавателя</option></select></div>
-          <div class="field" id="multipleTeacherField" hidden><label for="multipleTeacher" data-i18n="teachers">Преподаватели</label><select id="multipleTeacher" name="multipleTeacher" multiple size="5" aria-describedby="multipleTeacherHint"></select><span class="field-hint" id="multipleTeacherHint" data-i18n="multipleTeachersHint">Выберите несколько преподавателей.</span></div>
+          <div class="field" id="multipleTeacherField" hidden><label for="multipleTeacher" data-i18n="teachers">Преподаватели</label><select id="multipleTeacher" name="multipleTeacher" multiple size="5" aria-describedby="multipleTeacherHint"></select><span class="field-hint" id="multipleTeacherHint" data-i18n="multipleTeachersHint">Выберите несколько преподавателей.</span><span class="selection-summary" id="selectedTeachersSummary" aria-live="polite"></span></div>
           <div class="field"><label for="subject" data-i18n="subject">Предмет</label><select id="subject" name="subject" required><option value="">Сначала выберите преподавателя</option></select></div>
           <div class="field"><label for="day" data-i18n="weekday">День недели</label><select id="day" name="day"><option value="0" data-day="0">Понедельник</option><option value="1" data-day="1">Вторник</option><option value="2" data-day="2">Среда</option><option value="3" data-day="3">Четверг</option><option value="4" data-day="4">Пятница</option></select></div>
           <div class="field"><label for="start" data-i18n="startTime">Время первой пары</label><select id="start" name="start" required><option value="09:00">09:00–09:50</option><option value="10:00">10:00–10:50</option><option value="11:00">11:00–11:50</option><option value="12:00">12:00–12:50</option><option value="13:00">13:00–13:50</option><option value="14:00">14:00–14:50</option><option value="15:00">15:00–15:50</option><option value="16:00">16:00–16:50</option><option value="17:00">17:00–17:50</option></select></div>
@@ -1258,8 +1259,8 @@
     Object.assign(translations.kk, { workloadExamAuto: "Автоматты есептеу: студенттер саны × 0,3" });
     Object.assign(translations.ru, { workloadCourse: "Курс", workloadStudySemester: "Семестр", workloadStudentCount: "Число студентов", workloadChooseCourse: "Выберите курс", workloadChooseGroup: "Выберите группу", workloadTotal: "Барлығы", workloadStudentCountError: "Укажите целое число студентов", workloadStudentCountAuto: "Автоматически рассчитано по выбранным группам; при необходимости значение можно изменить.", workloadMultiGroupHint: "Для выбора нескольких групп удерживайте Ctrl (или ⌘ на Mac)." });
     Object.assign(translations.kk, { workloadCourse: "Курс", workloadStudySemester: "Семестр", workloadStudentCount: "Студенттер саны", workloadChooseCourse: "Курсты таңдаңыз", workloadChooseGroup: "Топты таңдаңыз", workloadTotal: "Барлығы", workloadStudentCountError: "Студенттер санын бүтін санмен енгізіңіз", workloadStudentCountAuto: "Таңдалған топтар бойынша автоматты есептеледі; қажет болса өзгертуге болады.", workloadMultiGroupHint: "Бірнеше топты таңдау үшін Ctrl (Mac жүйесінде ⌘) пернесін басып тұрыңыз." });
-    Object.assign(translations.ru, { chooseTeacher: "Выберите преподавателя", profileTeacherRequired: "Выберите своё ФИО", teacherNotRegistered: "Этот преподаватель не зарегистрирован", teacherPasswordError: "Пароль неправильный", logout: "Выйти", logoutSuccess: "Вы вышли из профиля", schedulerAccess: "Составитель", schedulerDescription: "Доступ к составлению расписания", schedulerNotAllowed: "Это ФИО не имеет доступа к составлению расписания", architectAccess: "Архитектор", developerAccess: "Разработчик", developerDescription: "Режим архитектора", developerLogin: "Имя разработчика", developerPhrase: "Секретная фраза", developerPhraseError: "Неверная секретная фраза", developerNameError: "Неверное имя разработчика", lessonMode: "Режим занятия", singleLessonMode: "Одиночное занятие", multipleLessonMode: "Несколько групп и преподавателей", multipleTeachersHint: "Выберите несколько преподавателей." });
-    Object.assign(translations.kk, { chooseTeacher: "Оқытушыны таңдаңыз", profileTeacherRequired: "Өз Т.А.Ә.-іңізді таңдаңыз", teacherNotRegistered: "Бұл оқытушы тіркелмеген", teacherPasswordError: "Құпиясөз қате", logout: "Шығу", logoutSuccess: "Профильден шықтыңыз", schedulerAccess: "Кесте құрастырушы", schedulerDescription: "Сабақ кестесін құрастыруға қолжетімділік", schedulerNotAllowed: "Бұл Т.А.Ә. кесте құрастыруға рұқсатсыз", architectAccess: "Архитектор", developerAccess: "Әзірлеуші", developerDescription: "Әзірлеуші режимі", developerLogin: "Әзірлеуші аты", developerPhrase: "Құпия фраза", developerPhraseError: "Құпия фраза қате", developerNameError: "Әзірлеуші аты қате", lessonMode: "Сабақ режимі", singleLessonMode: "Жеке сабақ", multipleLessonMode: "Бірнеше топ пен оқытушы", multipleTeachersHint: "Бірнеше оқытушыны таңдаңыз." });
+    Object.assign(translations.ru, { chooseTeacher: "Выберите преподавателя", profileTeacherRequired: "Выберите своё ФИО", teacherNotRegistered: "Этот преподаватель не зарегистрирован", teacherPasswordError: "Пароль неправильный", logout: "Выйти", logoutSuccess: "Вы вышли из профиля", schedulerAccess: "Составитель", schedulerDescription: "Доступ к составлению расписания", schedulerNotAllowed: "Это ФИО не имеет доступа к составлению расписания", architectAccess: "Архитектор", developerAccess: "Разработчик", developerDescription: "Режим архитектора", developerLogin: "Имя разработчика", developerPhrase: "Секретная фраза", developerPhraseError: "Неверная секретная фраза", developerNameError: "Неверное имя разработчика", lessonMode: "Режим занятия", singleLessonMode: "Одиночное занятие", multipleLessonMode: "Несколько групп и преподавателей", multipleTeachersHint: "Выберите несколько преподавателей.", selectedGroups: "Выбрано групп", selectedTeachers: "Выбрано преподавателей" });
+    Object.assign(translations.kk, { chooseTeacher: "Оқытушыны таңдаңыз", profileTeacherRequired: "Өз Т.А.Ә.-іңізді таңдаңыз", teacherNotRegistered: "Бұл оқытушы тіркелмеген", teacherPasswordError: "Құпиясөз қате", logout: "Шығу", logoutSuccess: "Профильден шықтыңыз", schedulerAccess: "Кесте құрастырушы", schedulerDescription: "Сабақ кестесін құрастыруға қолжетімділік", schedulerNotAllowed: "Бұл Т.А.Ә. кесте құрастыруға рұқсатсыз", architectAccess: "Архитектор", developerAccess: "Әзірлеуші", developerDescription: "Әзірлеуші режимі", developerLogin: "Әзірлеуші аты", developerPhrase: "Құпия фраза", developerPhraseError: "Құпия фраза қате", developerNameError: "Әзірлеуші аты қате", lessonMode: "Сабақ режимі", singleLessonMode: "Жеке сабақ", multipleLessonMode: "Бірнеше топ пен оқытушы", multipleTeachersHint: "Бірнеше оқытушыны таңдаңыз.", selectedGroups: "Таңдалған топтар", selectedTeachers: "Таңдалған оқытушылар" });
     Object.assign(translations.ru, { overlapBusy: "занятие пересекается по времени" });
     Object.assign(translations.kk, { overlapBusy: "сабақ уақыты қабаттасады" });
     Object.assign(translations.ru, { filterFaculty: "Факультет", filterCourse: "Курс", filterGroup: "По группе", filterTeacher: "По преподавателю", filters: "Фильтры", allFaculties: "Все факультеты", allCourses: "Все курсы", allGroups: "Все группы", allTeachers: "Все преподаватели", courseLabel: "курс", lessonCountField: "Количество пар подряд", freeHours: "Свободные часы" });
@@ -4423,6 +4424,14 @@
     function selectedLessonTeachers() {
       return [...form.elements.multipleTeacher.selectedOptions].map(option => option.value).filter(Boolean);
     }
+    function renderLessonSelectionSummary() {
+      const groupsSummary = document.getElementById("selectedGroupsSummary");
+      const teachersSummary = document.getElementById("selectedTeachersSummary");
+      const selectedGroups = [...form.elements.lectureGroups.selectedOptions].map(option => option.textContent.trim());
+      const selectedTeachers = selectedLessonTeachers();
+      groupsSummary.textContent = selectedGroups.length ? `${tr("selectedGroups")}: ${selectedGroups.join(", ")}` : "";
+      teachersSummary.textContent = selectedTeachers.length ? `${tr("selectedTeachers")}: ${selectedTeachers.join(", ")}` : "";
+    }
     function lessonTeachers(lesson) {
       return Array.isArray(lesson.teacherNames) && lesson.teacherNames.length
         ? lesson.teacherNames
@@ -4444,6 +4453,7 @@
       lectureField.hidden = !isMultiple;
       single.required = !isMultiple;
       multiple.required = isMultiple;
+      renderLessonSelectionSummary();
     }
     function updateLessonSelectionMode() {
       const isMultiple = lessonSelectionMode === "multiple";
@@ -4457,6 +4467,7 @@
       form.elements.multipleTeacher.required = isMultiple;
       updateGroupSelectionMode();
       updateSubjects(form.elements.faculty.value, form.elements.teacher.value, form.elements.subject.value);
+      renderLessonSelectionSummary();
     }
     function timeFromMinutes(value) { return `${String(Math.floor(value / 60)).padStart(2, "0")}:${String(value % 60).padStart(2, "0")}`; }
     function findSharedResources(first, second) {
@@ -5075,8 +5086,12 @@
     document.querySelectorAll(".color-choice").forEach(button => button.addEventListener("click", () => setColor(button.dataset.color)));
     form.elements.faculty.addEventListener("change", () => { updateGroups(form.elements.faculty.value); updateTeachers(form.elements.faculty.value); updateRooms(); updateLessonWorkloadPreview(); updateConflictPreview(); });
     form.elements.group.addEventListener("change", () => { updateGroups(form.elements.faculty.value, form.elements.group.value); updateConflictPreview(); });
-    form.elements.lectureGroups.addEventListener("change", updateConflictPreview);
+    form.elements.lectureGroups.addEventListener("change", () => {
+      renderLessonSelectionSummary();
+      updateConflictPreview();
+    });
     form.elements.multipleTeacher.addEventListener("change", () => {
+      renderLessonSelectionSummary();
       updateSubjects(form.elements.faculty.value, form.elements.teacher.value, form.elements.subject.value);
       updateLessonWorkloadPreview();
       updateConflictPreview();
