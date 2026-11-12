@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="844" viewBox="0 0 390 844" role="img" aria-labelledby="title description">
+  <title id="title">Международный казахско-турецкий университет имени Ходжи Ахмеда Ясави</title>
+  <desc id="description">Анимированная эмблема и название университета</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#21194f"/>
+      <stop offset=".52" stop-color="#5141ae"/>
+      <stop offset="1" stop-color="#087f86"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#d9dcff"/>
+      <stop offset=".5" stop-color="#fff"/>
+      <stop offset="1" stop-color="#d9dcff"/>
+      <animateTransform attributeName="gradientTransform" type="translate" from="-390 0" to="390 0" dur="4s" repeatCount="indefinite"/>
+    </linearGradient>
+    <clipPath id="globeClip"><circle cx="195" cy="278" r="96"/></clipPath>
+  </defs>
+  <style>
+    .meridian{transform-origin:195px 278px;animation:turn 6s ease-in-out infinite}
+    .meridian:nth-child(2){animation-delay:-2s}
+    .meridian:nth-child(3){animation-delay:-4s}
+    @keyframes turn{0%,100%{transform:scaleX(1)}50%{transform:scaleX(.05)}}
+    .traveller{animation:travel 4s ease-in-out infinite alternate}
+    @keyframes travel{to{transform:translateX(154px)}}
+    @media(prefers-reduced-motion:reduce){*{animation:none!important}}
+  </style>
+  <rect width="390" height="844" fill="#101126"/>
+  <rect width="390" height="844" fill="url(#background)" opacity=".8"/>
+  <circle cx="365" cy="115" r="190" fill="#fff" opacity=".035"/>
+  <circle cx="25" cy="820" r="205" fill="#05051d" opacity=".18"/>
+  <g clip-path="url(#globeClip)" fill="none" stroke="#fff" stroke-opacity=".85" stroke-width="5">
+    <ellipse class="meridian" cx="195" cy="278" rx="92" ry="96"/>
+    <ellipse class="meridian" cx="195" cy="278" rx="92" ry="96"/>
+    <ellipse class="meridian" cx="195" cy="278" rx="92" ry="96"/>
+    <line x1="99" y1="278" x2="291" y2="278"/>
+    <path d="M108 232Q195 257 282 232"/>
+    <path d="M108 324Q195 299 282 324"/>
+  </g>
+  <circle cx="195" cy="278" r="96" fill="none" stroke="#fff" stroke-width="7"/>
+  <circle class="traveller" cx="116" cy="278" r="12" fill="#ff3b6b"/>
+  <g fill="url(#shine)" font-family="Georgia,'Times New Roman',serif" font-size="24" font-weight="700" text-anchor="middle">
+    <text x="195" y="516">Международный</text>
+    <text x="195" y="558">казахско-турецкий</text>
+    <text x="195" y="600">университет имени</text>
+    <text x="195" y="642">Ходжи Ахмеда Ясави</text>
+  </g>
+</svg>

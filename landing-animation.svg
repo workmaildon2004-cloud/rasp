@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="480" viewBox="0 0 1000 480" role="img" aria-labelledby="title description">
+  <title id="title">Международный казахско-турецкий университет имени Ходжи Ахмеда Ясави</title>
+  <desc id="description">Анимированная эмблема и название университета</desc>
+  <defs>
+    <linearGradient id="shine" gradientUnits="userSpaceOnUse" x1="150" y1="0" x2="850" y2="0">
+      <stop offset="0" stop-color="#d9dcff"/>
+      <stop offset=".42" stop-color="#d9dcff"/>
+      <stop offset=".5" stop-color="#fff"/>
+      <stop offset=".58" stop-color="#d9dcff"/>
+      <stop offset="1" stop-color="#d9dcff"/>
+      <animateTransform attributeName="gradientTransform" type="translate" from="-700 0" to="700 0" dur="4s" repeatCount="indefinite"/>
+    </linearGradient>
+    <clipPath id="globeClip"><circle cx="60" cy="64" r="46"/></clipPath>
+  </defs>
+  <style>
+    .mer{transform-origin:60px 64px;animation:mer 6s ease-in-out infinite}
+    .m2{animation-delay:-2s}.m3{animation-delay:-4s}
+    @keyframes mer{0%,100%{transform:scaleX(1)}50%{transform:scaleX(.05)}}
+    .trav{animation:travel 4s ease-in-out infinite alternate}
+    @keyframes travel{to{transform:translateX(76px)}}
+    @media(prefers-reduced-motion:reduce){*{animation:none!important}}
+  </style>
+  <g transform="translate(384 14) scale(1.55)">
+    <g transform="translate(20 11)" clip-path="url(#globeClip)" fill="none" stroke="#fff" stroke-opacity=".85" stroke-width="3">
+      <ellipse class="mer m1" cx="60" cy="64" rx="44" ry="46"/>
+      <ellipse class="mer m2" cx="60" cy="64" rx="44" ry="46"/>
+      <ellipse class="mer m3" cx="60" cy="64" rx="44" ry="46"/>
+      <line x1="14" y1="64" x2="106" y2="64"/>
+      <path d="M18 42Q60 54 102 42"/>
+      <path d="M18 86Q60 74 102 86"/>
+    </g>
+    <g transform="translate(20 11)">
+      <circle class="ring" cx="60" cy="64" r="46" fill="none" stroke="#fff" stroke-width="5"/>
+      <circle class="trav" cx="22" cy="64" r="6" fill="#ff3b6b"/>
+    </g>
+  </g>
+  <g fill="url(#shine)" font-family="Georgia,'Times New Roman',serif" font-size="30" font-weight="700" text-anchor="middle">
+    <text x="500" y="300">Международный казахско-турецкий</text>
+    <text x="500" y="346">университет имени</text>
+    <text x="500" y="392">Ходжи Ахмеда Ясави</text>
+  </g>
+</svg>
