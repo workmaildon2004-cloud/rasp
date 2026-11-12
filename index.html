@@ -1058,7 +1058,6 @@
         <div class="form-grid">
           <div class="field full" id="profileTeacherField"><label for="profileTeacherInput" data-i18n="profileTeacher">Выберите своё ФИО</label><select id="profileTeacherInput" name="teacherName"><option value="" data-i18n="chooseTeacher">Выберите преподавателя</option></select></div>
           <div class="field full" id="developerNameField" hidden><label for="developerNameInput" data-i18n="developerLogin">Имя разработчика</label><input id="developerNameInput" name="developerName" type="text" autocomplete="off"></div>
-          <div class="field full" id="schedulerCodeField" hidden><label for="schedulerCodeInput" data-i18n="schedulerCode">Код приглашения</label><input id="schedulerCodeInput" name="schedulerCode" type="password" autocomplete="off" maxlength="64"></div>
           <div class="field full" id="developerPhraseField" hidden><label for="developerPhraseInput" data-i18n="developerPhrase">Секретная фраза</label><input id="developerPhraseInput" name="developerPhrase" type="password" autocomplete="off" maxlength="128"></div>
           <div class="field full password-field"><label for="profilePasswordInput" data-i18n="profilePassword">Пароль</label><input id="profilePasswordInput" name="password" type="password" autocomplete="current-password" minlength="8" required maxlength="128"><button class="password-toggle" type="button" data-password-target="profilePasswordInput" data-i18n-aria="showPassword">◉</button></div>
           <div class="field full password-field" id="profilePasswordConfirmField"><label for="profilePasswordConfirmInput" data-i18n="profilePasswordConfirm">Повторите пароль</label><input id="profilePasswordConfirmInput" name="passwordConfirm" type="password" autocomplete="new-password" minlength="8" required maxlength="128"><button class="password-toggle" type="button" data-password-target="profilePasswordConfirmInput" data-i18n-aria="showPassword">◉</button></div>
@@ -1237,8 +1236,8 @@
     Object.assign(translations.kk, { workloadExamAuto: "Автоматты есептеу: студенттер саны × 0,3" });
     Object.assign(translations.ru, { workloadCourse: "Курс", workloadStudySemester: "Семестр", workloadStudentCount: "Число студентов", workloadChooseCourse: "Выберите курс", workloadChooseGroup: "Выберите группу", workloadTotal: "Барлығы", workloadStudentCountError: "Укажите целое число студентов", workloadStudentCountAuto: "Автоматически рассчитано по выбранным группам; при необходимости значение можно изменить.", workloadMultiGroupHint: "Для выбора нескольких групп удерживайте Ctrl (или ⌘ на Mac)." });
     Object.assign(translations.kk, { workloadCourse: "Курс", workloadStudySemester: "Семестр", workloadStudentCount: "Студенттер саны", workloadChooseCourse: "Курсты таңдаңыз", workloadChooseGroup: "Топты таңдаңыз", workloadTotal: "Барлығы", workloadStudentCountError: "Студенттер санын бүтін санмен енгізіңіз", workloadStudentCountAuto: "Таңдалған топтар бойынша автоматты есептеледі; қажет болса өзгертуге болады.", workloadMultiGroupHint: "Бірнеше топты таңдау үшін Ctrl (Mac жүйесінде ⌘) пернесін басып тұрыңыз." });
-    Object.assign(translations.ru, { chooseTeacher: "Выберите преподавателя", profileTeacherRequired: "Выберите своё ФИО", teacherNotRegistered: "Этот преподаватель не зарегистрирован", teacherPasswordError: "Пароль неправильный", logout: "Выйти", logoutSuccess: "Вы вышли из профиля", schedulerAccess: "Составитель", schedulerDescription: "Доступ к составлению расписания", schedulerCode: "Код приглашения", schedulerCodeError: "Неверный код приглашения", schedulerNotAllowed: "Это ФИО не имеет доступа к составлению расписания", architectAccess: "Архитектор", developerAccess: "Разработчик", developerDescription: "Режим архитектора", developerLogin: "Имя разработчика", developerPhrase: "Секретная фраза", developerPhraseError: "Неверная секретная фраза", developerNameError: "Неверное имя разработчика" });
-    Object.assign(translations.kk, { chooseTeacher: "Оқытушыны таңдаңыз", profileTeacherRequired: "Өз Т.А.Ә.-іңізді таңдаңыз", teacherNotRegistered: "Бұл оқытушы тіркелмеген", teacherPasswordError: "Құпиясөз қате", logout: "Шығу", logoutSuccess: "Профильден шықтыңыз", schedulerAccess: "Кесте құрастырушы", schedulerDescription: "Сабақ кестесін құрастыруға қолжетімділік", schedulerCode: "Шақыру коды", schedulerCodeError: "Шақыру коды қате", schedulerNotAllowed: "Бұл Т.А.Ә. кесте құрастыруға рұқсатсыз", architectAccess: "Архитектор", developerAccess: "Әзірлеуші", developerDescription: "Әзірлеуші режимі", developerLogin: "Әзірлеуші аты", developerPhrase: "Құпия фраза", developerPhraseError: "Құпия фраза қате", developerNameError: "Әзірлеуші аты қате" });
+    Object.assign(translations.ru, { chooseTeacher: "Выберите преподавателя", profileTeacherRequired: "Выберите своё ФИО", teacherNotRegistered: "Этот преподаватель не зарегистрирован", teacherPasswordError: "Пароль неправильный", logout: "Выйти", logoutSuccess: "Вы вышли из профиля", schedulerAccess: "Составитель", schedulerDescription: "Доступ к составлению расписания", schedulerNotAllowed: "Это ФИО не имеет доступа к составлению расписания", architectAccess: "Архитектор", developerAccess: "Разработчик", developerDescription: "Режим архитектора", developerLogin: "Имя разработчика", developerPhrase: "Секретная фраза", developerPhraseError: "Неверная секретная фраза", developerNameError: "Неверное имя разработчика" });
+    Object.assign(translations.kk, { chooseTeacher: "Оқытушыны таңдаңыз", profileTeacherRequired: "Өз Т.А.Ә.-іңізді таңдаңыз", teacherNotRegistered: "Бұл оқытушы тіркелмеген", teacherPasswordError: "Құпиясөз қате", logout: "Шығу", logoutSuccess: "Профильден шықтыңыз", schedulerAccess: "Кесте құрастырушы", schedulerDescription: "Сабақ кестесін құрастыруға қолжетімділік", schedulerNotAllowed: "Бұл Т.А.Ә. кесте құрастыруға рұқсатсыз", architectAccess: "Архитектор", developerAccess: "Әзірлеуші", developerDescription: "Әзірлеуші режимі", developerLogin: "Әзірлеуші аты", developerPhrase: "Құпия фраза", developerPhraseError: "Құпия фраза қате", developerNameError: "Әзірлеуші аты қате" });
     Object.assign(translations.ru, { overlapBusy: "занятие пересекается по времени" });
     Object.assign(translations.kk, { overlapBusy: "сабақ уақыты қабаттасады" });
     Object.assign(translations.ru, { filterFaculty: "Факультет", filterCourse: "Курс", filterGroup: "По группе", filterTeacher: "По преподавателю", filters: "Фильтры", allFaculties: "Все факультеты", allCourses: "Все курсы", allGroups: "Все группы", allTeachers: "Все преподаватели", courseLabel: "курс", lessonCountField: "Количество пар подряд", freeHours: "Свободные часы" });
@@ -1302,7 +1301,6 @@
     };
     const spreadsheetId = "1eEUxo_gzLf51HghBK1UQK0JV5Q_yVTSZ68h7fPkXANc";
     const registrationSpreadsheetId = "1pKlJf2Xad0gd6_2mVmwh8AzxJZACY0ty0gEueI_QMNk";
-    const schedulerInviteCode = "RASPISANIE-2026";
     const schedulerNames = ["Бактиярова Айнур"];
     const developerName = "Архитектор Yasawi";
     const developerSecretPhrase = "12321232";
@@ -1879,7 +1877,6 @@
       document.getElementById("profileTeacherField").hidden = isDeveloper;
       document.getElementById("developerNameField").hidden = isDeveloper || authRole !== "developer";
       document.getElementById("profilePasswordConfirmField").hidden = isLogin || isDeveloper;
-      document.getElementById("schedulerCodeField").hidden = authRole !== "scheduler";
       document.getElementById("developerPhraseField").hidden = !isDeveloper;
       const passwordField = document.getElementById("profilePasswordInput").closest(".password-field");
       passwordField.hidden = isDeveloper;
@@ -1912,7 +1909,6 @@
       profileForm.elements.teacherName.value = profile.teacherName || "";
       profileForm.elements.password.value = "";
       profileForm.elements.passwordConfirm.value = "";
-      profileForm.elements.schedulerCode.value = "";
       profileForm.elements.developerPhrase.value = "";
       profileForm.elements.developerName.value = profile.developerName || "";
       profileForm.elements.password.value = readRememberedPassword();
@@ -1982,7 +1978,6 @@
       }
       profileForm.elements.password.value = "";
       profileForm.elements.passwordConfirm.value = "";
-      profileForm.elements.schedulerCode.value = "";
       profileForm.elements.developerPhrase.value = "";
     }
     function syncAuthScreen() {
@@ -4802,7 +4797,6 @@
       const password = String(data.get("password"));
       const passwordConfirm = String(data.get("passwordConfirm") || "");
       const rememberPassword = data.get("rememberPassword") === "on";
-      const schedulerCode = String(data.get("schedulerCode") || "");
       if (!teacherName) {
         if (authRole !== "developer") {
           toast(tr("profileTeacherRequired"));
@@ -4830,10 +4824,6 @@
             toast(tr("schedulerNotAllowed"));
             return;
           }
-          if (schedulerCode !== schedulerInviteCode) {
-            toast(tr("schedulerCodeError"));
-            return;
-          }
         }
         if (passwordHash !== savedPasswordHash) {
           toast(tr("teacherPasswordError"));
@@ -4852,10 +4842,6 @@
       }
       if (authRole === "scheduler" && !schedulerNames.some(name => normalize(name) === normalize(teacherName))) {
         toast(tr("schedulerNotAllowed"));
-        return;
-      }
-      if (authRole === "scheduler" && schedulerCode !== schedulerInviteCode) {
-        toast(tr("schedulerCodeError"));
         return;
       }
       const nextProfile = { email: "", phone: "", teacherName, developerName: submittedDeveloperName, role: authRole, password };
