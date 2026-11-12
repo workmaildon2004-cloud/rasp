@@ -2521,10 +2521,9 @@
           itemsByHour.set(startHour, [...(itemsByHour.get(startHour) || []), item]);
           for (let offset = 1; offset < agendaLessonSpan(item); offset++) occupiedHours.add(startHour + offset);
         }
-        const dayRowSpan = scheduleHours.filter(hour => !occupiedHours.has(hour)).length;
+        const dayRowSpan = scheduleHours.length;
         let dayRowIndex = 0;
         for (const hour of scheduleHours) {
-          if (occupiedHours.has(hour)) continue;
           const row = document.createElement("tr");
           if (dayRowIndex === 0) {
             const dayCell = document.createElement("td");
@@ -2534,6 +2533,10 @@
             row.append(dayCell);
           }
           dayRowIndex++;
+          if (occupiedHours.has(hour)) {
+            body.append(row);
+            continue;
+          }
           const timeCell = document.createElement("td");
           timeCell.className = "group-time-cell";
           timeCell.textContent = `${String(hour).padStart(2, "0")}:00–${String(hour).padStart(2, "0")}:50`;
@@ -2622,15 +2625,18 @@
             itemsByHour.set(startHour, [...(itemsByHour.get(startHour) || []), item]);
             for (let offset = 1; offset < agendaLessonSpan(item); offset++) occupiedHours.add(startHour + offset);
           }
-          const dayRowSpan = scheduleHours.filter(hour => !occupiedHours.has(hour)).length;
+          const dayRowSpan = scheduleHours.length;
           let dayRowIndex = 0;
           for (const hour of scheduleHours) {
-            if (occupiedHours.has(hour)) continue;
             const row = document.createElement("tr");
             if (dayRowIndex === 0) {
               const dayCell = document.createElement("td"); dayCell.className = "group-day-cell"; dayCell.rowSpan = dayRowSpan; dayCell.textContent = dayNames[language][day].toLocaleUpperCase(language === "kk" ? "kk-KZ" : "ru-RU"); row.append(dayCell);
             }
             dayRowIndex++;
+            if (occupiedHours.has(hour)) {
+              body.append(row);
+              continue;
+            }
             const timeCell = document.createElement("td"); timeCell.className = "group-time-cell"; timeCell.textContent = `${String(hour).padStart(2, "0")}:00–${String(hour).padStart(2, "0")}:50`; row.append(timeCell);
             const subjectCell = document.createElement("td"); subjectCell.className = "group-subject-cell";
             const roomCell = document.createElement("td");
