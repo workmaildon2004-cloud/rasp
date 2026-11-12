@@ -459,6 +459,10 @@
     .lesson-dialog .form-grid { gap: 16px 18px; }
     .field { display: flex; flex-direction: column; gap: 6px; }
     .field select[multiple] { min-height: 122px; height: auto; padding: 7px 10px; }
+    .field-label { display: block; margin-bottom: 5px; font-size: 13px; font-weight: 700; }
+    .lesson-mode-switch { display: flex; gap: 4px; }
+    .lesson-mode-switch button { width: 42px; height: 34px; border: 1px solid var(--line); border-radius: 7px; color: var(--muted); background: var(--paper); font-size: 20px; line-height: 1; }
+    .lesson-mode-switch button.selected { color: white; border-color: var(--forest); background: var(--forest); }
     .field[hidden] { display: none; }
     .field.full { grid-column: 1 / -1; }
     .field label { color: #596762; font-size: 11px; font-weight: 700; }
@@ -1042,9 +1046,11 @@
       <form id="lessonForm">
         <div class="form-grid">
           <div class="field"><label for="faculty" data-i18n="faculty">Факультет</label><select id="faculty" name="faculty"><option value="computer" data-i18n="computerFaculty">Компьютерная инженерия</option><option value="electrical" data-i18n="electricalFaculty">Электрическая инженерия</option></select></div>
+          <div class="field full"><span class="field-label" data-i18n="lessonMode">Режим занятия</span><div class="lesson-mode-switch" role="group" data-i18n-aria="lessonMode"><button id="singleLessonModeButton" type="button" class="selected" aria-pressed="true" data-i18n-aria="singleLessonMode">◉</button><button id="multipleLessonModeButton" type="button" aria-pressed="false" data-i18n-aria="multipleLessonMode">◎</button></div></div>
           <div class="field" id="singleGroupField"><label for="group" data-i18n="group">Группа</label><select id="group" name="group" required><option value="">Выберите группу</option></select><span class="field-hint" id="groupSizeHint">Выберите группу</span></div>
-          <div class="field" id="lectureGroupsField" hidden><label for="lectureGroups" data-i18n="streamGroups">Группы потока</label><select id="lectureGroups" name="lectureGroups" multiple size="5" aria-describedby="lectureGroupsHint"></select><span class="field-hint" id="lectureGroupsHint" data-i18n="streamGroupsHint">Выберите все группы, которые посещают эту лекцию. Удерживайте Ctrl для выбора нескольких.</span></div>
+          <div class="field" id="lectureGroupsField" hidden><label for="lectureGroups" data-i18n="streamGroups">Группы потока</label><select id="lectureGroups" name="lectureGroups" multiple size="5" aria-describedby="lectureGroupsHint"></select><span class="field-hint" id="lectureGroupsHint" data-i18n="streamGroupsHint">Выберите несколько групп.</span></div>
           <div class="field"><label for="teacher" data-i18n="teacher">Преподаватель</label><select id="teacher" name="teacher" required><option value="">Выберите преподавателя</option></select></div>
+          <div class="field" id="multipleTeacherField" hidden><label for="multipleTeacher" data-i18n="teachers">Преподаватели</label><select id="multipleTeacher" name="multipleTeacher" multiple size="5" aria-describedby="multipleTeacherHint"></select><span class="field-hint" id="multipleTeacherHint" data-i18n="multipleTeachersHint">Выберите несколько преподавателей.</span></div>
           <div class="field"><label for="subject" data-i18n="subject">Предмет</label><select id="subject" name="subject" required><option value="">Сначала выберите преподавателя</option></select></div>
           <div class="field"><label for="day" data-i18n="weekday">День недели</label><select id="day" name="day"><option value="0" data-day="0">Понедельник</option><option value="1" data-day="1">Вторник</option><option value="2" data-day="2">Среда</option><option value="3" data-day="3">Четверг</option><option value="4" data-day="4">Пятница</option></select></div>
           <div class="field"><label for="start" data-i18n="startTime">Время первой пары</label><select id="start" name="start" required><option value="09:00">09:00–09:50</option><option value="10:00">10:00–10:50</option><option value="11:00">11:00–11:50</option><option value="12:00">12:00–12:50</option><option value="13:00">13:00–13:50</option><option value="14:00">14:00–14:50</option><option value="15:00">15:00–15:50</option><option value="16:00">16:00–16:50</option><option value="17:00">17:00–17:50</option></select></div>
@@ -1252,8 +1258,8 @@
     Object.assign(translations.kk, { workloadExamAuto: "Автоматты есептеу: студенттер саны × 0,3" });
     Object.assign(translations.ru, { workloadCourse: "Курс", workloadStudySemester: "Семестр", workloadStudentCount: "Число студентов", workloadChooseCourse: "Выберите курс", workloadChooseGroup: "Выберите группу", workloadTotal: "Барлығы", workloadStudentCountError: "Укажите целое число студентов", workloadStudentCountAuto: "Автоматически рассчитано по выбранным группам; при необходимости значение можно изменить.", workloadMultiGroupHint: "Для выбора нескольких групп удерживайте Ctrl (или ⌘ на Mac)." });
     Object.assign(translations.kk, { workloadCourse: "Курс", workloadStudySemester: "Семестр", workloadStudentCount: "Студенттер саны", workloadChooseCourse: "Курсты таңдаңыз", workloadChooseGroup: "Топты таңдаңыз", workloadTotal: "Барлығы", workloadStudentCountError: "Студенттер санын бүтін санмен енгізіңіз", workloadStudentCountAuto: "Таңдалған топтар бойынша автоматты есептеледі; қажет болса өзгертуге болады.", workloadMultiGroupHint: "Бірнеше топты таңдау үшін Ctrl (Mac жүйесінде ⌘) пернесін басып тұрыңыз." });
-    Object.assign(translations.ru, { chooseTeacher: "Выберите преподавателя", profileTeacherRequired: "Выберите своё ФИО", teacherNotRegistered: "Этот преподаватель не зарегистрирован", teacherPasswordError: "Пароль неправильный", logout: "Выйти", logoutSuccess: "Вы вышли из профиля", schedulerAccess: "Составитель", schedulerDescription: "Доступ к составлению расписания", schedulerNotAllowed: "Это ФИО не имеет доступа к составлению расписания", architectAccess: "Архитектор", developerAccess: "Разработчик", developerDescription: "Режим архитектора", developerLogin: "Имя разработчика", developerPhrase: "Секретная фраза", developerPhraseError: "Неверная секретная фраза", developerNameError: "Неверное имя разработчика" });
-    Object.assign(translations.kk, { chooseTeacher: "Оқытушыны таңдаңыз", profileTeacherRequired: "Өз Т.А.Ә.-іңізді таңдаңыз", teacherNotRegistered: "Бұл оқытушы тіркелмеген", teacherPasswordError: "Құпиясөз қате", logout: "Шығу", logoutSuccess: "Профильден шықтыңыз", schedulerAccess: "Кесте құрастырушы", schedulerDescription: "Сабақ кестесін құрастыруға қолжетімділік", schedulerNotAllowed: "Бұл Т.А.Ә. кесте құрастыруға рұқсатсыз", architectAccess: "Архитектор", developerAccess: "Әзірлеуші", developerDescription: "Әзірлеуші режимі", developerLogin: "Әзірлеуші аты", developerPhrase: "Құпия фраза", developerPhraseError: "Құпия фраза қате", developerNameError: "Әзірлеуші аты қате" });
+    Object.assign(translations.ru, { chooseTeacher: "Выберите преподавателя", profileTeacherRequired: "Выберите своё ФИО", teacherNotRegistered: "Этот преподаватель не зарегистрирован", teacherPasswordError: "Пароль неправильный", logout: "Выйти", logoutSuccess: "Вы вышли из профиля", schedulerAccess: "Составитель", schedulerDescription: "Доступ к составлению расписания", schedulerNotAllowed: "Это ФИО не имеет доступа к составлению расписания", architectAccess: "Архитектор", developerAccess: "Разработчик", developerDescription: "Режим архитектора", developerLogin: "Имя разработчика", developerPhrase: "Секретная фраза", developerPhraseError: "Неверная секретная фраза", developerNameError: "Неверное имя разработчика", lessonMode: "Режим занятия", singleLessonMode: "Одиночное занятие", multipleLessonMode: "Несколько групп и преподавателей", multipleTeachersHint: "Выберите несколько преподавателей." });
+    Object.assign(translations.kk, { chooseTeacher: "Оқытушыны таңдаңыз", profileTeacherRequired: "Өз Т.А.Ә.-іңізді таңдаңыз", teacherNotRegistered: "Бұл оқытушы тіркелмеген", teacherPasswordError: "Құпиясөз қате", logout: "Шығу", logoutSuccess: "Профильден шықтыңыз", schedulerAccess: "Кесте құрастырушы", schedulerDescription: "Сабақ кестесін құрастыруға қолжетімділік", schedulerNotAllowed: "Бұл Т.А.Ә. кесте құрастыруға рұқсатсыз", architectAccess: "Архитектор", developerAccess: "Әзірлеуші", developerDescription: "Әзірлеуші режимі", developerLogin: "Әзірлеуші аты", developerPhrase: "Құпия фраза", developerPhraseError: "Құпия фраза қате", developerNameError: "Әзірлеуші аты қате", lessonMode: "Сабақ режимі", singleLessonMode: "Жеке сабақ", multipleLessonMode: "Бірнеше топ пен оқытушы", multipleTeachersHint: "Бірнеше оқытушыны таңдаңыз." });
     Object.assign(translations.ru, { overlapBusy: "занятие пересекается по времени" });
     Object.assign(translations.kk, { overlapBusy: "сабақ уақыты қабаттасады" });
     Object.assign(translations.ru, { filterFaculty: "Факультет", filterCourse: "Курс", filterGroup: "По группе", filterTeacher: "По преподавателю", filters: "Фильтры", allFaculties: "Все факультеты", allCourses: "Все курсы", allGroups: "Все группы", allTeachers: "Все преподаватели", courseLabel: "курс", lessonCountField: "Количество пар подряд", freeHours: "Свободные часы" });
@@ -1539,6 +1545,7 @@
     const landingLogoButton = document.getElementById("landingLogoButton");
     let authMode = "register";
     let authRole = "teacher";
+    let lessonSelectionMode = "single";
     let developerProfile = (() => {
       try {
         const saved = JSON.parse(localStorage.getItem(developerProfileStorageKey) || "null");
@@ -4224,9 +4231,15 @@
         form.elements.room.value = lesson.room || "";
       }
       const lessonGroups = lesson ? getLessonGroups(lesson) : selectedGroup ? [selectedGroup] : [];
+      lessonSelectionMode = lesson && (lesson.groupIds?.length > 1 || lesson.teacherNames?.length > 1) ? "multiple" : "single";
       updateGroups(form.elements.faculty.value, lessonGroups[0]?.id || lesson?.groupId || lesson?.group || "", lessonGroups.map(group => group.id));
+      updateTeachers(form.elements.faculty.value, lesson?.teacher || "", lesson?.subject || "");
+      updateLessonSelectionMode();
       updateGroupSelectionMode();
-        updateTeachers(form.elements.faculty.value, lesson?.teacher || "", lesson?.subject || "");
+      if (lesson?.teacherNames?.length) {
+        const multipleTeacher = form.elements.multipleTeacher;
+        for (const option of multipleTeacher.options) option.selected = lesson.teacherNames.includes(option.value);
+      }
       updateRooms();
       setColor(lesson?.color || "mint");
       updateLessonWorkloadPreview();
@@ -4292,18 +4305,25 @@
     }
     function updateTeachers(faculty, selectedTeacher = "", selectedSubject = "") {
       const select = form.elements.teacher;
+      const multipleSelect = form.elements.multipleTeacher;
       const facultySubjects = subjects.filter(item => item.faculty === faculty);
       const teacherRoles = new Map();
       for (const item of facultySubjects) if (!teacherRoles.has(item.teacher)) teacherRoles.set(item.teacher, item.role);
       select.replaceChildren(new Option(tr("chooseTeacher"), ""));
+      multipleSelect.replaceChildren();
       for (const [teacher, role] of teacherRoles) select.add(new Option(`${teacher}${role ? ` · ${role}` : ""}`, teacher));
+      for (const [teacher, role] of teacherRoles) multipleSelect.add(new Option(`${teacher}${role ? ` · ${role}` : ""}`, teacher));
       if (selectedTeacher && !teacherRoles.has(selectedTeacher)) select.add(new Option(selectedTeacher, selectedTeacher));
       select.value = selectedTeacher;
       updateSubjects(faculty, select.value, selectedSubject);
     }
     function updateSubjects(faculty, teacher, selected = "") {
       const select = form.elements.subject;
-      const available = subjects.filter(item => item.faculty === faculty && item.teacher === teacher);
+      const selectedTeachers = lessonSelectionMode === "multiple"
+        ? [...form.elements.multipleTeacher.selectedOptions].map(option => option.value)
+        : [teacher];
+      const available = subjects.filter(item => item.faculty === faculty &&
+        (!selectedTeachers.length || selectedTeachers.includes(item.teacher)));
       const names = [...new Set(available.map(item => item.subject))];
       select.replaceChildren(new Option(teacher ? tr("chooseSubject") : tr("chooseTeacherFirst"), ""));
       for (const name of names) select.add(new Option(name, name));
@@ -4400,27 +4420,51 @@
         .map(option => groups.find(group => group.id === option.value))
         .filter(Boolean);
     }
+    function selectedLessonTeachers() {
+      return [...form.elements.multipleTeacher.selectedOptions].map(option => option.value).filter(Boolean);
+    }
+    function lessonTeachers(lesson) {
+      return Array.isArray(lesson.teacherNames) && lesson.teacherNames.length
+        ? lesson.teacherNames
+        : lesson.teacher ? [lesson.teacher] : [];
+    }
     function updateGroupSelectionMode() {
-      const isLecture = form.elements.kind.value === "Лекция";
+      const isMultiple = lessonSelectionMode === "multiple";
       const singleField = document.getElementById("singleGroupField");
       const lectureField = document.getElementById("lectureGroupsField");
       const single = form.elements.group;
       const multiple = form.elements.lectureGroups;
-      if (isLecture && single.value && ![...multiple.options].some(option => option.selected)) {
+      if (isMultiple && single.value && ![...multiple.options].some(option => option.selected)) {
         const match = [...multiple.options].find(option => option.value === single.value);
         if (match) match.selected = true;
-      } else if (!isLecture && multiple.selectedOptions.length) {
+      } else if (!isMultiple && multiple.selectedOptions.length) {
         single.value = multiple.selectedOptions[0].value;
       }
-      singleField.hidden = isLecture;
-      lectureField.hidden = !isLecture;
-      single.required = !isLecture;
-      multiple.required = isLecture;
+      singleField.hidden = isMultiple;
+      lectureField.hidden = !isMultiple;
+      single.required = !isMultiple;
+      multiple.required = isMultiple;
+    }
+    function updateLessonSelectionMode() {
+      const isMultiple = lessonSelectionMode === "multiple";
+      document.getElementById("singleLessonModeButton").classList.toggle("selected", !isMultiple);
+      document.getElementById("multipleLessonModeButton").classList.toggle("selected", isMultiple);
+      document.getElementById("singleLessonModeButton").setAttribute("aria-pressed", String(!isMultiple));
+      document.getElementById("multipleLessonModeButton").setAttribute("aria-pressed", String(isMultiple));
+      document.getElementById("multipleTeacherField").hidden = !isMultiple;
+      form.elements.teacher.closest(".field").hidden = isMultiple;
+      form.elements.teacher.required = !isMultiple;
+      form.elements.multipleTeacher.required = isMultiple;
+      updateGroupSelectionMode();
+      updateSubjects(form.elements.faculty.value, form.elements.teacher.value, form.elements.subject.value);
     }
     function timeFromMinutes(value) { return `${String(Math.floor(value / 60)).padStart(2, "0")}:${String(value % 60).padStart(2, "0")}`; }
     function findSharedResources(first, second) {
       const conflicts = [];
-      if (first.teacher && second.teacher && normalize(first.teacher) === normalize(second.teacher)) conflicts.push(`${tr("teacherBusy")}: ${first.teacher}`);
+      const sharedTeachers = lessonTeachers(first).filter(teacher =>
+        lessonTeachers(second).some(other => normalize(other) === normalize(teacher))
+      );
+      if (sharedTeachers.length) conflicts.push(`${tr("teacherBusy")}: ${sharedTeachers.join(", ")}`);
       if (first.room && second.room && normalizeRoom(first.room) === normalizeRoom(second.room)) conflicts.push(`${tr("roomBusy")}: ${first.room}`);
       const firstGroups = getLessonGroups(first);
       const secondGroups = getLessonGroups(second);
@@ -5032,6 +5076,11 @@
     form.elements.faculty.addEventListener("change", () => { updateGroups(form.elements.faculty.value); updateTeachers(form.elements.faculty.value); updateRooms(); updateLessonWorkloadPreview(); updateConflictPreview(); });
     form.elements.group.addEventListener("change", () => { updateGroups(form.elements.faculty.value, form.elements.group.value); updateConflictPreview(); });
     form.elements.lectureGroups.addEventListener("change", updateConflictPreview);
+    form.elements.multipleTeacher.addEventListener("change", () => {
+      updateSubjects(form.elements.faculty.value, form.elements.teacher.value, form.elements.subject.value);
+      updateLessonWorkloadPreview();
+      updateConflictPreview();
+    });
     form.elements.teacher.addEventListener("change", () => { updateSubjects(form.elements.faculty.value, form.elements.teacher.value); updateLessonWorkloadPreview(); updateConflictPreview(); });
     form.elements.kind.addEventListener("change", () => { updateGroupSelectionMode(); updateRooms(); updateLessonWorkloadPreview(); updateConflictPreview(); });
     form.elements.lessonCount.addEventListener("change", () => { updateStartOptions(Number(form.elements.lessonCount.value)); updateLessonWorkloadPreview(); updateConflictPreview(); });
@@ -5041,25 +5090,40 @@
     }
     form.elements.subject.addEventListener("change", () => {
       const subject = subjects.find(item => item.faculty === form.elements.faculty.value && item.subject === form.elements.subject.value);
-      if (subject && subject.teacher !== form.elements.teacher.value) updateTeachers(form.elements.faculty.value, subject.teacher, subject.subject);
+      if (lessonSelectionMode === "single" && subject && subject.teacher !== form.elements.teacher.value) updateTeachers(form.elements.faculty.value, subject.teacher, subject.subject);
       updateLessonWorkloadPreview();
       updateConflictPreview();
+    });
+    document.getElementById("singleLessonModeButton").addEventListener("click", () => {
+      lessonSelectionMode = "single";
+      updateLessonSelectionMode();
+    });
+    document.getElementById("multipleLessonModeButton").addEventListener("click", () => {
+      lessonSelectionMode = "multiple";
+      updateLessonSelectionMode();
     });
     form.addEventListener("submit", event => {
       event.preventDefault();
       if (!canEditSchedule()) return;
       const data = new FormData(form);
       const lessonKind = data.get("kind");
-      const selectedGroups = lessonKind === "Лекция"
+      const selectedGroups = lessonSelectionMode === "multiple"
         ? selectedLectureGroups()
         : groups.filter(item => item.faculty === data.get("faculty") && item.id === data.get("group"));
+      const selectedTeachers = lessonSelectionMode === "multiple"
+        ? selectedLessonTeachers()
+        : [String(data.get("teacher") || "").trim()].filter(Boolean);
       if (!selectedGroups.length) {
         toast(tr("chooseGroup"), { type: "warning" });
         return;
       }
+      if (!selectedTeachers.length) {
+        toast(tr("chooseTeacher"), { type: "warning" });
+        return;
+      }
       const selectedGroup = selectedGroups[0];
       const lessonCount = Number(data.get("lessonCount")) || 1;
-      const lesson = { id: editingId || crypto.randomUUID(), day: Number(data.get("day")), start: data.get("start"), lessonCount, duration: lessonCount * lessonDuration + (lessonCount - 1) * 10, weekly: true, subject: data.get("subject").trim(), kind: lessonKind, faculty: data.get("faculty"), group: selectedGroup.name, groupId: selectedGroup.id, groupCode: selectedGroup.code || "", groupSize: selectedGroup.size || 0, groupIds: selectedGroups.map(group => group.id), groupRefs: selectedGroups.map(({ id, name, code, size, faculty, course, studyLevel }) => ({ id, name, code, size, faculty, course, studyLevel })), room: data.get("room").trim(), teacher: data.get("teacher").trim(), color: Object.keys(kindPalettes).find(kind => kind === lessonKind) ? ({ "Лекция": "blue", "БӨЖ": "mint", "Практика": "mint", "Лаборатория": "coral", "Семинар": "coral" })[lessonKind] : selectedColor };
+      const lesson = { id: editingId || crypto.randomUUID(), day: Number(data.get("day")), start: data.get("start"), lessonCount, duration: lessonCount * lessonDuration + (lessonCount - 1) * 10, weekly: true, subject: data.get("subject").trim(), kind: lessonKind, faculty: data.get("faculty"), group: selectedGroup.name, groupId: selectedGroup.id, groupCode: selectedGroup.code || "", groupSize: selectedGroup.size || 0, groupIds: selectedGroups.map(group => group.id), groupRefs: selectedGroups.map(({ id, name, code, size, faculty, course, studyLevel }) => ({ id, name, code, size, faculty, course, studyLevel })), room: data.get("room").trim(), teacher: selectedTeachers.join(" / "), teacherNames: selectedTeachers, color: Object.keys(kindPalettes).find(kind => kind === lessonKind) ? ({ "Лекция": "blue", "БӨЖ": "mint", "Практика": "mint", "Лаборатория": "coral", "Семинар": "coral" })[lessonKind] : selectedColor };
       if (!lesson.subject) return;
       const allowedServiceDays = getServiceTeacherDayRestriction(lesson);
       if (allowedServiceDays) {
